@@ -17,7 +17,7 @@ void scan(int n, int *odata, const int *idata) {
 		}
 		odata[i] = odata[i - 1] + idata[i - 1];
 	}
-	// TODO
+	// TO_DOne
     printf("StreamCompaction::CPU::scan : exclusive prefix sum.\n");
 }
 
@@ -35,7 +35,7 @@ int compactWithoutScan(int n, int *odata, const int *idata) {
 			odata[k++] = idata[i];
 		}
 	}
-    // TODO
+    // TO__DOne
     return k;
 }
 
@@ -45,7 +45,7 @@ int compactWithoutScan(int n, int *odata, const int *idata) {
  * @returns the number of elements remaining after compaction.
  */
 int compactWithScan(int n, int *odata, const int *idata) {
-    // TODO
+    // TO_DOne
 	int*TempArray = new int[n+1];
 	int*ScanArray = new int[n+1];
 	for (int i = 0; i < n; i++)
