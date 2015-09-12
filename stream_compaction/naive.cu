@@ -42,7 +42,7 @@ namespace StreamCompaction {
 			for (int d = 1; d <= ilog2ceil(n); d++)
 			{
 				int pow2_d_1 = pow(2, d - 1);
-				kernNaiveScan <<<1, n-1 >>>(pow2_d_1,dev_o);
+				kernNaiveScan <<<1, n >>>(pow2_d_1,dev_o); //later:blocksize,gridsize
 				/*cudaMemcpy(odata, dev_o, n*sizeof(int),cudaMemcpyDeviceToHost);
 				printf("\nd=%d\n---[", d);
 				for (int i = 0; i < n; i++)
@@ -51,7 +51,7 @@ namespace StreamCompaction {
 				}
 				printf("]\n");*/
 			}
-			// TODO
+			// TO_DOne
 			cudaMemcpy(odata, dev_o, n*sizeof(int), cudaMemcpyDeviceToHost);
 			//inclusive to exclusive
 			for (int i = n-1; i >0; i--)

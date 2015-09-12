@@ -14,7 +14,7 @@
 #include "testing_helpers.hpp"
 
 int main(int argc, char* argv[]) {
-    const int SIZE = 1 << 3;
+    const int SIZE = 1 << 4;
     const int NPOT = SIZE - 3;
     int a[SIZE], b[SIZE], c[SIZE];
 
@@ -53,14 +53,15 @@ int main(int argc, char* argv[]) {
 
     zeroArray(SIZE, c);
     printDesc("work-efficient scan, power-of-two");
+	printArray(SIZE, a, true);//delete
     StreamCompaction::Efficient::scan(SIZE, c, a);
-    //printArray(SIZE, c, true);
+    printArray(SIZE, c, true);
     printCmpResult(SIZE, b, c);
-
     zeroArray(SIZE, c);
     printDesc("work-efficient scan, non-power-of-two");
+	printArray(NPOT, a, true);//delete
     StreamCompaction::Efficient::scan(NPOT, c, a);
-    //printArray(NPOT, c, true);
+    printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
 
     zeroArray(SIZE, c);
@@ -108,13 +109,15 @@ int main(int argc, char* argv[]) {
 
     zeroArray(SIZE, c);
     printDesc("work-efficient compact, power-of-two");
+	printArray(SIZE, a, true);//delete
     count = StreamCompaction::Efficient::compact(SIZE, c, a);
-    //printArray(count, c, true);
+    printArray(count, c, true);
     printCmpLenResult(count, expectedCount, b, c);
 
     zeroArray(SIZE, c);
     printDesc("work-efficient compact, non-power-of-two");
+	printArray(SIZE, a, true);//delete
     count = StreamCompaction::Efficient::compact(NPOT, c, a);
-    //printArray(count, c, true);
+    printArray(count, c, true);
     printCmpLenResult(count, expectedNPOT, b, c);
 }
