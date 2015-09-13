@@ -29,15 +29,16 @@ Output
 ****************
 ** SCAN TESTS **
 ****************
+
     [  38  19  38  37   5  47  15  35   0  12   3   0  42 ...  26   0 ]
-==== cpu scan, power-of-two ====
-StreamCompaction::CPU::scan : exclusive prefix sum.
-    [   0  38  57  95 132 137 184 199 234 234 246 249 249 ... 6203 6229 ]
-==== cpu scan, non-power-of-two ====
-StreamCompaction::CPU::scan : exclusive prefix sum.
+	==== cpu scan, power-of-two ====
+	StreamCompaction::CPU::scan : exclusive prefix sum.
+	[   0  38  57  95 132 137 184 199 234 234 246 249 249 ... 6203 6229 ]
+	==== cpu scan, non-power-of-two ====
+	StreamCompaction::CPU::scan : exclusive prefix sum.
     [   0  38  57  95 132 137 184 199 234 234 246 249 249 ... 6146 6190 ]
     passed
-==== naive scan, power-of-two ====
+	==== naive scan, power-of-two ====
          GPU time for naive scan : 0.0696ms
     [   0  38  57  95 132 137 184 199 234 234 246 249 249 ... 6203 6229 ]
     passed
