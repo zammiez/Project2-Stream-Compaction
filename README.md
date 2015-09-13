@@ -26,8 +26,24 @@ Thus, I choose block size 128 for naive scan, 64 for efficient scan and 512 for 
 
 CPU & GPU Performance Comparison
 --------------------------------
-![](images/power of 2.PNG)
-![](images/not power of 2.PNG)
+|Array_length|		2^4|	2^6|	2^8|	2^10|	2^12|
+|------------|---------|-------|-------|--------|-------|
+|cpu			|power of 2		|0.0024	|0.002304	|0.002304	|0.002304	|0.002304|
+|cpu			|! Power of 2	|0.0023	|0.002304	|0.002304	|0.002336	|0.002336|
+|gpu naïve		|power of 2		|0.027	|0.0374		|0.0496		|	0.0609	|0.0766|
+|gpu naïve		|! Power of 2	|0.0252	|0.0355		|0.0473		|0.0587		|0.0745|
+|gpu efficient	|power of 2		|0.0541	|0.0765		|0.0985		|0.1312		|0.1551|
+|gpu efficient	|! Power of 2	|0.053	|0.0748		|0.0969		|0.1307		|0.1537|
+|gpu thrust		|power of 2		|0.03293|0.3129		|0.3414		|	0.3854	|0.3011|
+|gpu thrust		|! Power of 2	|0.3039	|0.3476		|0.2955		|	0.3535	|	0.3035|
+(ms)
+Graph is shown below.
+![](images/power of 2.png)
+![](images/not power of 2.png)
+- As the line chart shows, the calculation time for thrust scan doesn't have any specific rules while naive and efficient scan time perform power function correlation with the length of array.
+- Weirdly, the time for CPU is very small no matter how long the array is. I was assumming that it was not right to count CPU time using Cuda event so I then tried to use std::clock. However, the result time is even smaller(0.0). Therefore, CPU did perform better than GPU for this task, and that might due to the high cost for memory accessing.
+- The naive scan method also performs better than the efficient scan which is not as expected. 
+
 
 Output 
 --------------------------
