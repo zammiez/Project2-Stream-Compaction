@@ -8,11 +8,11 @@ CUDA Stream Compaction
 
 Descriptions
 --------------------------
--Part 1 : CPU Scan & Compaction (see file cpu.cu)
--Part 2 : Naive Scan (naive.cu)
--Part 3 : Work-Efficient Scan & Compaction (efficient.cu)
--Part 4 : Thrust Scan (thrust.cu)
--Part 5 : Radix Sort (in file thrust.cu, RadixSort::sort)
+ * Part 1 : CPU Scan & Compaction (see file cpu.cu)
+ * Part 2 : Naive Scan (naive.cu)
+ * Part 3 : Work-Efficient Scan & Compaction (efficient.cu)
+ * Part 4 : Thrust Scan (thrust.cu)
+ * Part 5 : Radix Sort (in file thrust.cu, RadixSort::sort)
 
 Block Sizes Optimization
 --------------------------
