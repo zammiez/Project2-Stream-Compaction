@@ -15,7 +15,7 @@ namespace StreamCompaction {
 
 		__global__ void kernNaiveScan(int pow2d_1, int *dev_odata)
 		{
-			int k = threadIdx.x;
+			int k = blockIdx.x * blockDim.x + threadIdx.x;
 			if (k >= pow2d_1)
 				dev_odata[k] = dev_odata[k - pow2d_1] + dev_odata[k];
 		}
@@ -37,20 +37,26 @@ namespace StreamCompaction {
 		}
 
 		void scan(int n, int *odata, const int *idata) {
+			dim3 threadsPerBlock(blockSize_naive);
+			dim3 fullBlocksPerGrid((n + blockSize_eff - 1) / blockSize_eff);
 			//??? inclusive or exclusive ? not exactly 39.2/slides
 			initArrays(n, idata);
+
+			cudaEvent_t start, stop;
+			cudaEventCreate(&start);
+			cudaEventCreate(&stop);
+
+			cudaEventRecord(start);
 			for (int d = 1; d <= ilog2ceil(n); d++)
 			{
 				int pow2_d_1 = pow(2, d - 1);
-				kernNaiveScan <<<1, n >>>(pow2_d_1,dev_o); //later:blocksize,gridsize
-				/*cudaMemcpy(odata, dev_o, n*sizeof(int),cudaMemcpyDeviceToHost);
-				printf("\nd=%d\n---[", d);
-				for (int i = 0; i < n; i++)
-				{
-					printf("\t%d", odata[i]);
-				}
-				printf("]\n");*/
+				kernNaiveScan <<<fullBlocksPerGrid, threadsPerBlock >>>(pow2_d_1, dev_o); //later:blocksize,gridsize
 			}
+			cudaEventRecord(stop);
+			cudaEventSynchronize(stop);
+			float milliseconds = 0;
+			cudaEventElapsedTime(&milliseconds, start, stop);
+			printf("\t GPU time for naive scan : %.4fms\n",milliseconds);
 			// TO_DOne
 			cudaMemcpy(odata, dev_o, n*sizeof(int), cudaMemcpyDeviceToHost);
 			//inclusive to exclusive

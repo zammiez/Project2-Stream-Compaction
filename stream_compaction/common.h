@@ -7,6 +7,10 @@
 #define FILENAME (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 #define checkCUDAError(msg) checkCUDAErrorFn(msg, FILENAME, __LINE__)
 
+#define blockSize_eff	32
+#define blockSize_naive	32
+#define blockSize_thrust 32
+
 /**
  * Check for CUDA errors; print and exit if there was a problem.
  */

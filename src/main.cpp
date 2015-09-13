@@ -14,12 +14,12 @@
 #include "testing_helpers.hpp"
 
 int main(int argc, char* argv[]) {
-    const int SIZE = 1 << 3;
+    const int SIZE = 1 << 8;
     const int NPOT = SIZE - 3;
     int a[SIZE], b[SIZE], c[SIZE];
 
     // Scan tests
-
+	
     printf("\n");
     printf("****************\n");
     printf("** SCAN TESTS **\n");
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     StreamCompaction::CPU::scan(NPOT, c, a);
     printArray(NPOT, b, true);
     printCmpResult(NPOT, b, c);
-
+	
     zeroArray(SIZE, c);
     printDesc("naive scan, power-of-two");
     StreamCompaction::Naive::scan(SIZE, c, a);
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     StreamCompaction::Naive::scan(NPOT, c, a);
 	printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
-
+	
     zeroArray(SIZE, c);
     printDesc("work-efficient scan, power-of-two");
 	printArray(SIZE, a, true);//delete
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     StreamCompaction::Thrust::scan(NPOT, c, a);
     printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
-
+	
     printf("\n");
     printf("*****************************\n");
     printf("** STREAM COMPACTION TESTS **\n");
@@ -135,12 +135,10 @@ int main(int argc, char* argv[]) {
 	a[6] = 1;
 	a[7] = 0;
 
-	zeroArray(SIZE, c);
+	zeroArray(8, c);
 	printDesc("Radix Sort, power-of-two");
-	printArray(SIZE, a, true);//delete
-	StreamCompaction::RadixSort::sort(SIZE, c, a);
-	printArray(SIZE, c, true);
+	printArray(8, a, true);//delete
+	StreamCompaction::RadixSort::sort(8, c, a);
+	printArray(8, c, true);
 	//printCmpResult(SIZE, b, c);
-
-
 }
