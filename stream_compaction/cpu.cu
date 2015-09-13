@@ -1,6 +1,9 @@
 #include <cstdio>
 #include "cpu.h"
 #include "common.h"
+#include <cuda_runtime.h>
+#include <ctime>
+
 namespace StreamCompaction {
 namespace CPU {
 
@@ -8,6 +11,16 @@ namespace CPU {
  * CPU scan (prefix sum).
  */
 void scan(int n, int *odata, const int *idata) {
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
+
+	cudaEventRecord(start);
+	std::clock_t t1, t2;
+	t1 = std::clock();
+
+	double duration;
+
 	for (int i = 0; i < n; i++)
 	{
 		if (i==0)
@@ -17,8 +30,21 @@ void scan(int n, int *odata, const int *idata) {
 		}
 		odata[i] = odata[i - 1] + idata[i - 1];
 	}
+	t2 = std::clock();
+
+	duration = (float)t2 - (float)t1;
+
+	cudaEventRecord(stop);
+
+	cudaEventSynchronize(stop);
+	float milliseconds = 0;
+	cudaEventElapsedTime(&milliseconds, start, stop);
+
+	printf("\t(CudaEvent)CPU time for scan : %3fms\n",milliseconds);
+	printf("\t(Clock)CPU time for scan : %3fms\n", duration);
+
 	// TO_DOne
-    printf("StreamCompaction::CPU::scan : exclusive prefix sum.\n");
+    //printf("StreamCompaction::CPU::scan : exclusive prefix sum.\n");
 }
 
 /**

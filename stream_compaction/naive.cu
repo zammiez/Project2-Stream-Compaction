@@ -38,7 +38,7 @@ namespace StreamCompaction {
 
 		void scan(int n, int *odata, const int *idata) {
 			dim3 threadsPerBlock(blockSize_naive);
-			dim3 fullBlocksPerGrid((n + blockSize_eff - 1) / blockSize_eff);
+			dim3 fullBlocksPerGrid((n + blockSize_naive - 1) / blockSize_naive);
 			//??? inclusive or exclusive ? not exactly 39.2/slides
 			initArrays(n, idata);
 

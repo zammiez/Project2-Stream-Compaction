@@ -12,9 +12,11 @@
 #include <stream_compaction/efficient.h>
 #include <stream_compaction/thrust.h>
 #include "testing_helpers.hpp"
+#include <string>
+#include <iostream>
 
 int main(int argc, char* argv[]) {
-    const int SIZE = 1 << 8;
+    const int SIZE = 1 << 10;
     const int NPOT = SIZE - 3;
     int a[SIZE], b[SIZE], c[SIZE];
 
@@ -31,51 +33,49 @@ int main(int argc, char* argv[]) {
     zeroArray(SIZE, b);
     printDesc("cpu scan, power-of-two");
     StreamCompaction::CPU::scan(SIZE, b, a);
-    printArray(SIZE, b, true);
+    //printArray(SIZE, b, true);
 
     zeroArray(SIZE, c);
     printDesc("cpu scan, non-power-of-two");
     StreamCompaction::CPU::scan(NPOT, c, a);
-    printArray(NPOT, b, true);
+    //printArray(NPOT, b, true);
     printCmpResult(NPOT, b, c);
 	
     zeroArray(SIZE, c);
     printDesc("naive scan, power-of-two");
     StreamCompaction::Naive::scan(SIZE, c, a);
-    printArray(SIZE, c, true);
+    //printArray(SIZE, c, true);
     printCmpResult(SIZE, b, c);
 
     zeroArray(SIZE, c);
     printDesc("naive scan, non-power-of-two");
     StreamCompaction::Naive::scan(NPOT, c, a);
-	printArray(NPOT, c, true);
+	//printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
 	
     zeroArray(SIZE, c);
     printDesc("work-efficient scan, power-of-two");
-	printArray(SIZE, a, true);//delete
     StreamCompaction::Efficient::scan(SIZE, c, a);
-    printArray(SIZE, c, true);
+    //printArray(SIZE, c, true);
     printCmpResult(SIZE, b, c);
     zeroArray(SIZE, c);
     printDesc("work-efficient scan, non-power-of-two");
-	printArray(NPOT, a, true);//delete
     StreamCompaction::Efficient::scan(NPOT, c, a);
-    printArray(NPOT, c, true);
+    //printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
 
     zeroArray(SIZE, c);
     printDesc("thrust scan, power-of-two");
     StreamCompaction::Thrust::scan(SIZE, c, a);
-    printArray(SIZE, c, true);
+    //printArray(SIZE, c, true);
     printCmpResult(SIZE, b, c);
 
     zeroArray(SIZE, c);
     printDesc("thrust scan, non-power-of-two");
     StreamCompaction::Thrust::scan(NPOT, c, a);
-    printArray(NPOT, c, true);
+    //printArray(NPOT, c, true);
     printCmpResult(NPOT, b, c);
-	
+	//*
     printf("\n");
     printf("*****************************\n");
     printf("** STREAM COMPACTION TESTS **\n");
@@ -140,5 +140,6 @@ int main(int argc, char* argv[]) {
 	printArray(8, a, true);//delete
 	StreamCompaction::RadixSort::sort(8, c, a);
 	printArray(8, c, true);
-	//printCmpResult(SIZE, b, c);
+	//printCmpResult(SIZE, b, c);*/
+	std::cin.get();
 }

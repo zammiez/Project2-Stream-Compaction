@@ -33,7 +33,7 @@ namespace StreamCompaction {
 			cudaEventRecord(start);
 			thrust::exclusive_scan(dv_in.begin(), dv_in.end(), dv_out.begin());
 			cudaEventRecord(stop);
-			//thrust::exclusive_scan(idata, idata + n, odata);
+
 			cudaEventSynchronize(stop);
 			float milliseconds = 0;
 			cudaEventElapsedTime(&milliseconds, start, stop);
