@@ -14,7 +14,7 @@
 #include "testing_helpers.hpp"
 
 int main(int argc, char* argv[]) {
-    const int SIZE = 1 << 4;
+    const int SIZE = 1 << 3;
     const int NPOT = SIZE - 3;
     int a[SIZE], b[SIZE], c[SIZE];
 
@@ -120,4 +120,27 @@ int main(int argc, char* argv[]) {
     count = StreamCompaction::Efficient::compact(NPOT, c, a);
     printArray(count, c, true);
     printCmpLenResult(count, expectedNPOT, b, c);
+
+	printf("\n");
+	printf("*****************************\n");
+	printf("**        Radix Sort       **\n");
+	printf("*****************************\n");
+
+	a[0] = 4;
+	a[1] = 7;
+	a[2] = 2;
+	a[3] = 6;
+	a[4] = 3;
+	a[5] = 5;
+	a[6] = 1;
+	a[7] = 0;
+
+	zeroArray(SIZE, c);
+	printDesc("Radix Sort, power-of-two");
+	printArray(SIZE, a, true);//delete
+	StreamCompaction::RadixSort::sort(SIZE, c, a);
+	printArray(SIZE, c, true);
+	//printCmpResult(SIZE, b, c);
+
+
 }

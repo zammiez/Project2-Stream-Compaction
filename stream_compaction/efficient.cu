@@ -127,7 +127,7 @@ namespace StreamCompaction {
 			cudaFree(dev_input);
 		}
 
-		__global__ void kernCalcTemp(int * dev_idata,int *dev_outTemp,int n)
+		__global__ void kernMapToBoolean(int * dev_idata,int *dev_outTemp,int n)
 		{
 			int index = threadIdx.x;
 			if (dev_idata[index] != 0 && index<n) 
@@ -162,7 +162,7 @@ namespace StreamCompaction {
 			
 
 			//Step 1 : Compute temporary array.
-			kernCalcTemp <<<1, N >>>(dev_input,dev_temp,n);//later:blocksize,gridsize 
+			kernMapToBoolean <<<1, N >>>(dev_input,dev_temp,n);//later:blocksize,gridsize 
 			cudaMemcpy(dev_scan, dev_temp, size, cudaMemcpyDeviceToDevice);
 
 			//Step 2 : Run exclusive scan
